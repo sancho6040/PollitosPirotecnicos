@@ -860,6 +860,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8997152f5f5f2e41b1ac79a894caf93, type: 3}
+--- !u!114 &937914281 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3418193281917088245, guid: e8997152f5f5f2e41b1ac79a894caf93,
+    type: 3}
+  m_PrefabInstance: {fileID: 937914280}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &937914282 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3636558388186052638, guid: e8997152f5f5f2e41b1ac79a894caf93,
+    type: 3}
+  m_PrefabInstance: {fileID: 937914280}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1237276514
 GameObject:
   m_ObjectHideFlags: 0
@@ -1474,6 +1492,21 @@ PrefabInstance:
       propertyPath: tip
       value: 
       objectReference: {fileID: 215776393}
+    - target: {fileID: 6687514227734447573, guid: cd00856db841dfa4ebd1389950cdbf5f,
+        type: 3}
+      propertyPath: lives
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6687514227734447573, guid: cd00856db841dfa4ebd1389950cdbf5f,
+        type: 3}
+      propertyPath: ScoreText
+      value: 
+      objectReference: {fileID: 937914281}
+    - target: {fileID: 6687514227734447573, guid: cd00856db841dfa4ebd1389950cdbf5f,
+        type: 3}
+      propertyPath: dieScreen
+      value: 
+      objectReference: {fileID: 937914282}
     - target: {fileID: 6687514227936644806, guid: cd00856db841dfa4ebd1389950cdbf5f,
         type: 3}
       propertyPath: m_LocalRotation.w

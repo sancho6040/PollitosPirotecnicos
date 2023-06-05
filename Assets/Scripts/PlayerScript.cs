@@ -52,7 +52,7 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
-        ScoreText.Text = "Score: " + score;
+        ScoreText.text = "Score: " + score;
         if (coolDown > 0)
         {
             coolDown -= Time.deltaTime;
@@ -106,7 +106,7 @@ public class PlayerScript : MonoBehaviour
     void TakeDamage()
     {
         lives -= 1;
-        if (lives >= 0)
+        if (lives <= 0)
         {
             die();
         }
