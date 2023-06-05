@@ -1,55 +1,61 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-    public Transform targetPoint;
-    public GameObject tentacle;
-    public float initScale;
-    public float tentacleSize;
+    [Header("Player variables")]
+    public int lives;
+    public int score;
 
-    public GameObject puntica;
-    public float distanceToPuntica;
-    public float newDistance;
-    public float newScale;
+    [Header("movement variables")]
+    public float movementSpeed = 1f;
+    public float tentacleSpeed = 0.5f;
+    
+    // tentacle
+    private GameObject target;
+    private GameObject tentacle;
+    public GameObject tip;
+    
+    //Scale values
+    private float initialDistance;
+    private float initialScale;
+
+    private float newDistance;
+    private float newScale;
+
+    private Rigidbody rb;
 
     void Start()
     {
-        targetPoint = GameObject.Find("Target").transform;
+        rb = GetComponent<Rigidbody>();
+        target = GameObject.Find("Target");
         tentacle = GameObject.Find("Player/Tentacle");
-        initScale = tentacle.transform.localScale.z;
-        tentacleSize = tentacle.transform.GetChild(0).gameObject.transform.localScale.z;
 
-        distanceToPuntica = Mathf.Abs(transform.position.magnitude - puntica.transform.position.magnitude);
+        initialDistance = (transform.position - tip.transform.position).magnitude;
+        initialScale = tentacle.transform.localScale.z;
     }
 
     void Update()
     {
-        //---------sistema 1-----------------
-        // if(Input.GetButton("Fire1"))
-        // {
-        //     Debug.Log("Fire");
-        //     float finalScale = Mathf.Abs(targetPoint.transform.position.z) * .3f;
-        //     tentacle.transform.localScale = new Vector3(tentacle.transform.localScale.x, tentacle.transform.localScale.y, Mathf.Lerp(tentacle.transform.localScale.z, finalScale, 0.2f));
-        // }
-
-        //---------sistema 1-----------------
         if (Input.GetButton("Fire1"))
         {
-            puntica.transform.position = targetPoint.transform.position;
-            newScale = (puntica.transform.position.magnitude * initScale) / distanceToPuntica;
-            tentacle.transform.localScale = new Vector3(
-                tentacle.transform.localScale.x,
-                tentacle.transform.localScale.y,
-                Mathf.Lerp(tentacle.transform.localScale.z, newScale, 0.2f)
-            );
+            tip.transform.DOMove(target.transform.position, tentacleSpeed).SetEase(Ease.OutQuart).OnComplete(() => playerMove());
         }
 
+        newDistance = (transform.position - tip.transform.position).magnitude;
+        newScale = (newDistance * initialScale) / initialDistance;
+        
+        tentacle.transform.DOScaleZ(newScale, 0f);
+        tentacle.transform.LookAt(tip.transform);
+    }
 
-        // float angle = Mathf.Atan(targetPoint.position.x / targetPoint.position.y);
-        // tentacle.transform.Rotate(new Vector3(0, angle, 0));
-
-        tentacle.transform.rotation = Quaternion.LookRotation(targetPoint.position);
+    void playerMove()
+    {
+        Vector3 unitDirection = (target.transform.position - transform.position).normalized;
+        Debug.Log(unitDirection);
+        rb.velocity = Vector3.zero;
+        rb.AddForce(unitDirection * movementSpeed);
     }
 }
