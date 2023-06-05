@@ -32,7 +32,7 @@ public class ChickenScript : MonoBehaviour
 
     public void die()
     {
-        // Instantiate(explosionParticles, transform.position, Quaternion.identity);
+        Instantiate(explosionParticles, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 

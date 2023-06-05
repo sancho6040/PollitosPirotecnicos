@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using TMPro;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class PlayerScript : MonoBehaviour
     public int score;
     private bool bIsAttacking;
     public float coolDown;
+    public GameObject dieScreen;
+
+    public TMP_Text ScoreText;
 
     [Header("movement variables")]
     public float movementSpeed = 1f;
@@ -31,9 +35,7 @@ public class PlayerScript : MonoBehaviour
     private Rigidbody rb;
 
     [Header("partiles")]
-
     public GameObject crashParticles;
-
 
     void Start()
     {
@@ -50,6 +52,7 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
+        ScoreText.Text = "Score: " + score;
         if (coolDown > 0)
         {
             coolDown -= Time.deltaTime;
@@ -58,7 +61,10 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetButton("Fire1") && coolDown <= 0)
         {
             Debug.Log("ola");
-            tip.transform.DOMove(target.transform.position, tentacleSpeed).SetEase(Ease.InQuart).OnComplete(() => playerMove());
+            tip.transform
+                .DOMove(target.transform.position, tentacleSpeed)
+                .SetEase(Ease.InQuart)
+                .OnComplete(() => playerMove());
             coolDown = tentacleSpeed;
             bIsAttacking = true;
         }
@@ -100,6 +106,16 @@ public class PlayerScript : MonoBehaviour
     void TakeDamage()
     {
         lives -= 1;
+        if (lives >= 0)
+        {
+            die();
+        }
+    }
+
+    void die()
+    {
+        Time.timeScale = 0f;
+        dieScreen.SetActive(true);
     }
 
     private void OnCollisionEnter(Collision other)
@@ -119,8 +135,6 @@ public class PlayerScript : MonoBehaviour
             {
                 TakeDamage();
             }
-
         }
     }
-
 }
