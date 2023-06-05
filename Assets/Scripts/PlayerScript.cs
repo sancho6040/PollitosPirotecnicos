@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {
     [Header("Player variables")]
-    public int lives;
+    public int lives = 5;
     public int score;
     private bool bIsAttacking;
     public float coolDown;
@@ -83,11 +83,12 @@ public class PlayerScript : MonoBehaviour
     void playerMove()
     {
         Vector3 unitDirection = (target.transform.position - transform.position).normalized;
+        float distance = (target.transform.position - transform.position).magnitude;
         rb.velocity = Vector3.zero;
 
         if (chikenDetector.isAChicken())
         {
-            rb.AddForce(unitDirection * movementSpeed);
+            rb.AddForce(unitDirection * movementSpeed * distance);
         }
         else
         {
@@ -98,7 +99,7 @@ public class PlayerScript : MonoBehaviour
 
     void TakeDamage()
     {
-
+        lives -= 1;
     }
 
     private void OnCollisionEnter(Collision other)
